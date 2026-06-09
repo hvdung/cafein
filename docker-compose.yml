@@ -1,0 +1,17 @@
+services:
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.dev
+    container_name: restaurant-ai-frontend
+    ports:
+      - "3000:3000"
+    volumes:
+      # Mount source code — changes reflect instantly via Next.js hot reload
+      - ./frontend:/app
+      # Isolate node_modules inside container (don't override with host)
+      - /app/node_modules
+      - /app/.next
+    environment:
+      - WATCHPACK_POLLING=true   # needed for hot reload inside Docker on macOS
+    restart: unless-stopped
