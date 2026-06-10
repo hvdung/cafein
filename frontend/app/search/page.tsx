@@ -1,12 +1,10 @@
 import Link from "next/link";
 import {
   MagnifyingGlass,
-  SlidersHorizontal,
-  MapPin,
   Clock,
-  Coffee,
 } from "@phosphor-icons/react/dist/ssr";
 import { RestaurantCard } from "@/components/restaurant-card";
+import { RightPanel } from "@/components/right-panel";
 import { searchRestaurants } from "@/lib/search";
 
 type PageProps = {
@@ -154,41 +152,8 @@ export default function SearchPage({ searchParams }: PageProps) {
           </div>
         </div>
 
-        {/* Right: Map pane */}
-        <div className="map-pane">
-          <div className="map-bg-grid" />
-
-          <div className="map-road-h" style={{ top: "30%" }} />
-          <div className="map-road-h" style={{ top: "62%" }} />
-          <div className="map-road-v" style={{ left: "36%" }} />
-          <div className="map-road-v" style={{ left: "68%" }} />
-
-          <span className="map-label" style={{ top: "28%", left: "38%", transform: "translateY(-100%)" }}>
-            Lê Lợi
-          </span>
-          <span className="map-label" style={{ top: "60%", left: "70%", transform: "translateY(-100%)" }}>
-            Võ Văn Tần
-          </span>
-
-          {results.slice(0, 5).map((item, index) => (
-            <Link
-              key={item.id}
-              href={`/${item.slug}`}
-              className="map-marker"
-              style={{
-                left: `${20 + (index % 3) * 24}%`,
-                top: `${28 + Math.floor(index / 3) * 30 + (index % 2) * 12}%`,
-              }}
-            >
-              {item.name}
-            </Link>
-          ))}
-
-          <div className="map-attribution">
-            <MapPin size={11} weight="fill" style={{ display: "inline", marginRight: 4 }} />
-            Google Maps tích hợp sắp ra mắt
-          </div>
-        </div>
+        {/* Right: tabbed panel (map / AI chat) */}
+        <RightPanel restaurants={results} />
       </section>
     </main>
   );

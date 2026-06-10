@@ -1,22 +1,26 @@
 import type { Metadata } from "next";
-import { Outfit, Plus_Jakarta_Sans } from "next/font/google";
+import localFont from "next/font/local";
 import Script from "next/script";
 import "./globals.css";
 import { Sidebar } from "@/components/sidebar";
 
-const outfit = Outfit({
-  subsets: ["latin"],
-  variable: "--font-outfit",
-  weight: ["400", "500", "600", "700", "800"],
+const playwrite = localFont({
+  src: [
+    {
+      path: "../fonts/PlaywriteGBJ-VariableFont_wght.ttf",
+      weight: "100 400",
+      style: "normal",
+    },
+    {
+      path: "../fonts/PlaywriteGBJ-Italic-VariableFont_wght.ttf",
+      weight: "100 400",
+      style: "italic",
+    },
+  ],
+  variable: "--font-playwrite",
   display: "swap",
 });
 
-const jakarta = Plus_Jakarta_Sans({
-  subsets: ["latin"],
-  variable: "--font-jakarta",
-  weight: ["400", "500", "600", "700"],
-  display: "swap",
-});
 
 export const metadata: Metadata = {
   title: "Gastro-AI - Tìm quán ngon theo gu của bạn",
@@ -30,7 +34,7 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="vi">
-      <body className={`${outfit.variable} ${jakarta.variable}`}>
+      <body className={playwrite.variable}>
         <Script id="theme-init" strategy="beforeInteractive" dangerouslySetInnerHTML={{ __html: themeScript }} />
         <Sidebar />
         <div className="app-content">{children}</div>

@@ -11,7 +11,8 @@
       "Skill(run:*)",
       "Bash(npm install *)",
       "Bash(npm run dev > /tmp/gastro-dev.log 2>&1 & *)",
-      "Bash(curl -s http://localhost:3000)"
+      "Bash(curl -s http://localhost:3000)",
+      "Bash(curl -s http://localhost:3000/search)"
     ],
     "additionalDirectories": [
       "/private/tmp"
