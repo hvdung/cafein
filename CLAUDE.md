@@ -90,3 +90,6 @@ REDIS_URL=redis://localhost:6379
 - `priceRange` is always `1 | 2 | 3` (1 = <100k VND, 2 = 100–300k, 3 = >300k).
 - New restaurants added to `mock-data.ts` must include an `aiMatch` (0–100) and `aiInsight` string to simulate the AI recommendation layer.
 - The `Sidebar` component is always rendered; it is `"use client"` and uses `usePathname()` for active state — do not make it a Server Component.
+
+## NOTE before do:
+- All tasks must be performed via Docker, Docker Compose.

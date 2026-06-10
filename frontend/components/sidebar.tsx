@@ -2,23 +2,34 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { FiCompass, FiBookmark, FiCpu, FiUser, FiSettings, FiHelpCircle, FiPlus } from "react-icons/fi";
+import type { Icon as PhosphorIcon } from "@phosphor-icons/react";
+import {
+  Compass,
+  MagnifyingGlass,
+  BookmarkSimple,
+  User,
+  Gear,
+  Question,
+  Plus,
+  Coffee,
+} from "@phosphor-icons/react";
+import { ThemeToggleSidebar, ThemeToggleMobile } from "@/components/theme-toggle";
 
 type NavItem = {
   href: string;
   label: string;
-  icon: React.ComponentType<{ size?: number }>;
+  icon: PhosphorIcon;
 };
 
 const mainNav: NavItem[] = [
-  { href: "/",        label: "Discover",     icon: FiCompass  },
-  { href: "/search",  label: "Saved",        icon: FiBookmark },
-  { href: "/profile", label: "Profile",      icon: FiUser     },
+  { href: "/",        label: "Khám phá",  icon: Compass       },
+  { href: "/search",  label: "Tìm kiếm",  icon: MagnifyingGlass },
+  { href: "/profile", label: "Hồ sơ",     icon: User          },
 ];
 
 const subNav: NavItem[] = [
-  { href: "#", label: "Settings", icon: FiSettings   },
-  { href: "#", label: "Help",     icon: FiHelpCircle },
+  { href: "#", label: "Cài đặt", icon: Gear     },
+  { href: "#", label: "Hỗ trợ",  icon: Question },
 ];
 
 function NavLink({ href, label, icon: Icon }: NavItem) {
@@ -27,7 +38,9 @@ function NavLink({ href, label, icon: Icon }: NavItem) {
 
   return (
     <Link className={`sidebar-link${active ? " active" : ""}`} href={href}>
-      <Icon size={18} />
+      <span className="sidebar-link-icon">
+        <Icon size={18} weight={active ? "fill" : "regular"} />
+      </span>
       <span>{label}</span>
     </Link>
   );
@@ -38,8 +51,8 @@ function MobileNavItem({ href, label, icon: Icon }: NavItem) {
   const active = href === "/" ? pathname === "/" : pathname.startsWith(href);
 
   return (
-    <Link href={href} className={`mobile-bottom-nav-item${active ? " active" : ""}`}>
-      <Icon size={22} />
+    <Link href={href} className={`mobile-nav-item${active ? " active" : ""}`}>
+      <Icon size={22} weight={active ? "fill" : "regular"} />
       <span>{label}</span>
     </Link>
   );
@@ -48,61 +61,61 @@ function MobileNavItem({ href, label, icon: Icon }: NavItem) {
 export function Sidebar() {
   return (
     <>
-      {/* ── Desktop Sidebar ─────────────────── */}
+      {/* Desktop Sidebar */}
       <aside className="app-sidebar">
-        <div className="brand-block">
-          <div className="brand-icon">GA</div>
+        <div className="sidebar-brand">
+          <div className="sidebar-brand-mark">
+            <Coffee size={18} weight="fill" />
+          </div>
           <div>
-            <h1>Gastro-AI</h1>
-            <p>Precision Appetite</p>
+            <div className="sidebar-brand-name">Gastro-AI</div>
+            <div className="sidebar-brand-tagline">Tìm theo gu của bạn</div>
           </div>
         </div>
 
         <nav className="sidebar-nav">
           {mainNav.map((item) => (
-            <NavLink key={item.label} {...item} />
+            <NavLink key={item.href} {...item} />
           ))}
         </nav>
 
         <Link href="/search" style={{ textDecoration: "none" }}>
-          <button className="new-search-btn" type="button">
-            <FiPlus size={18} />
-            <span>New Search</span>
+          <button className="sidebar-search-btn" type="button">
+            <Plus size={16} weight="bold" />
+            Tìm kiếm mới
           </button>
         </Link>
 
         <div className="sidebar-footer">
           {subNav.map((item) => (
-            <NavLink key={item.label} {...item} />
+            <NavLink key={item.href} {...item} />
           ))}
+          <ThemeToggleSidebar />
         </div>
       </aside>
 
-      {/* ── Mobile Top Bar ──────────────────── */}
+      {/* Mobile Top Bar */}
       <header className="mobile-topbar">
-        <Link href="/" style={{ fontFamily: "var(--font-montserrat)", color: "var(--primary)", fontWeight: 800, fontSize: 18 }}>
-          Gastro-AI
-        </Link>
-        <Link href="/search" style={{ color: "var(--text-soft)" }}>
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
-            <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
-          </svg>
-        </Link>
+        <Link href="/" className="mobile-topbar-brand">Gastro-AI</Link>
+        <div style={{ display: "flex", alignItems: "center", gap: 4 }}>
+          <ThemeToggleMobile />
+          <Link href="/search" className="mobile-topbar-icon">
+            <MagnifyingGlass size={20} weight="regular" />
+          </Link>
+        </div>
       </header>
 
-      {/* ── Mobile Bottom Nav ───────────────── */}
+      {/* Mobile Bottom Nav */}
       <nav className="mobile-bottom-nav">
-        {mainNav.slice(0, 2).map((item) => (
-          <MobileNavItem key={item.label} {...item} />
-        ))}
+        <MobileNavItem href="/" label="Khám phá" icon={Compass} />
+        <MobileNavItem href="/search" label="Tìm kiếm" icon={MagnifyingGlass} />
 
-        {/* Center FAB */}
-        <Link href="/search" className="mobile-bottom-nav-fab">
-          <FiCpu size={24} />
+        <Link href="/search" className="mobile-nav-fab">
+          <Coffee size={22} weight="fill" />
         </Link>
 
-        <MobileNavItem href="/profile" label="Profile" icon={FiUser} />
-        <MobileNavItem href="#" label="More" icon={FiSettings} />
+        <MobileNavItem href="/profile" label="Hồ sơ" icon={User} />
+        <MobileNavItem href="#" label="Đã lưu" icon={BookmarkSimple} />
       </nav>
     </>
   );
