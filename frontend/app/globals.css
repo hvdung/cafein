@@ -1446,6 +1446,60 @@ button { font-family: inherit; cursor: pointer; }
 .chat-input-bar button:disabled { opacity: 0.4; cursor: not-allowed; }
 
 /* ==============================================================
+   AI CHAT PAGE
+   ============================================================== */
+.ai-chat-page {
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.ai-chat-header {
+  background: var(--surface);
+  border-bottom: 1px solid var(--line);
+  padding: 16px 24px;
+  flex-shrink: 0;
+}
+
+.ai-chat-header-inner {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.ai-chat-header-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--r-md);
+  background: var(--brown);
+  color: #fff;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+}
+
+.ai-chat-header-title {
+  font-family: var(--font-outfit), sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text);
+  margin: 0;
+  line-height: 1.2;
+}
+
+.ai-chat-header-sub {
+  font-size: 12px;
+  color: var(--text-3);
+  margin: 2px 0 0;
+}
+
+.ai-chat-page .chat-pane {
+  flex: 1;
+  min-height: 0;
+}
+
+/* ==============================================================
    EMPTY STATE
    ============================================================== */
 .empty-state {

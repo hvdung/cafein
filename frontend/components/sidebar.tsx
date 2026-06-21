@@ -12,6 +12,7 @@ import {
   Question,
   Plus,
   Coffee,
+  Sparkle,
 } from "@phosphor-icons/react";
 import { ThemeToggleSidebar, ThemeToggleMobile } from "@/components/theme-toggle";
 
@@ -22,9 +23,10 @@ type NavItem = {
 };
 
 const mainNav: NavItem[] = [
-  { href: "/",        label: "Khám phá",  icon: Compass       },
-  { href: "/search",  label: "Tìm kiếm",  icon: MagnifyingGlass },
-  { href: "/profile", label: "Hồ sơ",     icon: User          },
+  { href: "/",        label: "Khám phá",   icon: Compass         },
+  { href: "/search",  label: "Tìm kiếm",   icon: MagnifyingGlass },
+  { href: "/chat",    label: "AI Trợ lý",  icon: Sparkle         },
+  { href: "/profile", label: "Hồ sơ",      icon: User            },
 ];
 
 const subNav: NavItem[] = [
@@ -110,8 +112,8 @@ export function Sidebar() {
         <MobileNavItem href="/" label="Khám phá" icon={Compass} />
         <MobileNavItem href="/search" label="Tìm kiếm" icon={MagnifyingGlass} />
 
-        <Link href="/search" className="mobile-nav-fab">
-          <Coffee size={22} weight="fill" />
+        <Link href="/chat" className="mobile-nav-fab">
+          <Sparkle size={22} weight="fill" />
         </Link>
 
         <MobileNavItem href="/profile" label="Hồ sơ" icon={User} />
