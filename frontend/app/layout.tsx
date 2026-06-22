@@ -6,16 +6,16 @@ import { Sidebar } from "@/components/sidebar";
 
 const playwrite = localFont({
   src: [
-    {
-      path: "../fonts/PlaywriteGBJ-VariableFont_wght.ttf",
-      weight: "100 400",
-      style: "normal",
-    },
-    {
-      path: "../fonts/PlaywriteGBJ-Italic-VariableFont_wght.ttf",
-      weight: "100 400",
-      style: "italic",
-    },
+  {
+    path: "../fonts/PlaywriteGBJ-VariableFont_wght.ttf",
+    weight: "100 400",
+    style: "normal",
+  },
+  {
+    path: "../fonts/PlaywriteGBJ-Italic-VariableFont_wght.ttf",
+    weight: "100 400",
+    style: "italic",
+  },
   ],
   variable: "--font-playwrite",
   display: "swap",
@@ -33,12 +33,12 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="vi">
-      <body className={playwrite.variable}>
-        <Script id="theme-init" strategy="beforeInteractive" dangerouslySetInnerHTML={{ __html: themeScript }} />
-        <Sidebar />
-        <div className="app-content">{children}</div>
-      </body>
-    </html>
+  <html lang="vi">
+    <body className={playwrite.variable}>
+    <Script id="theme-init" strategy="beforeInteractive" dangerouslySetInnerHTML={{ __html: themeScript }} />
+    <Sidebar />
+    <div className="app-content">{children}</div>
+    </body>
+  </html>
   );
 }
