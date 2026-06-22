@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import Script from "next/script";
 import "./globals.css";
-import { Sidebar } from "@/components/sidebar";
+import { LayoutShell } from "@/components/layout-shell";
+import { QueryProvider } from "@/components/query-provider";
 
 const playwrite = localFont({
   src: [
@@ -36,8 +37,9 @@ export default function RootLayout({
   <html lang="vi">
     <body className={playwrite.variable}>
     <Script id="theme-init" strategy="beforeInteractive" dangerouslySetInnerHTML={{ __html: themeScript }} />
-    <Sidebar />
-    <div className="app-content">{children}</div>
+    <QueryProvider>
+      <LayoutShell>{children}</LayoutShell>
+    </QueryProvider>
     </body>
   </html>
   );
