@@ -6,6 +6,7 @@ class Settings(BaseSettings):
 
   APP_ENV: str = "development"
   SECRET_KEY: str = "change-me-in-production"
+  ACCESS_TOKEN_EXPIRE_MINUTES: int = 60
   API_V1_PREFIX: str = "/api/v1"
 
   # CORS
