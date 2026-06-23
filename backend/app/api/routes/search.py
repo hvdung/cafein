@@ -8,4 +8,4 @@ router = APIRouter(prefix="/search", tags=["search"])
 
 @router.post("", response_model=SearchResponse)
 async def search_restaurants(req: SearchRequest) -> SearchResponse:
-  return await search_service.search(req)
+    return await search_service.search(req)
