@@ -1,6 +1,5 @@
 import { Sparkle } from "@phosphor-icons/react/dist/ssr";
 import { AiChat } from "@/components/ai-chat";
-import { restaurants } from "@/lib/mock-data";
 
 export default function ChatPage() {
   return (
@@ -18,7 +17,7 @@ export default function ChatPage() {
       </div>
     </div>
     </header>
-    <AiChat restaurants={restaurants} />
+    <AiChat />
   </main>
   );
 }

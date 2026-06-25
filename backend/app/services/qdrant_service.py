@@ -17,16 +17,24 @@ def get_client() -> AsyncQdrantClient:
     return _client
 
 
-async def ensure_collection(vector_size: int = 1024) -> None:
+async def ensure_collection(
+    vector_size: int = 1024,
+    collection_name: str | None = None,
+    recreate: bool = False,
+) -> None:
     client = get_client()
+    name = collection_name or settings.QDRANT_COLLECTION
     collections = await client.get_collections()
     names = [c.name for c in collections.collections]
-    if settings.QDRANT_COLLECTION not in names:
+    if name in names and recreate:
+        await client.delete_collection(collection_name=name)
+        names.remove(name)
+    if name not in names:
         await client.create_collection(
-            collection_name=settings.QDRANT_COLLECTION,
+            collection_name=name,
             vectors_config=VectorParams(size=vector_size, distance=Distance.COSINE),
         )
-        logger.info("qdrant_collection_created", collection=settings.QDRANT_COLLECTION)
+        logger.info("qdrant_collection_created", collection=name)
 
 
 def _build_filter(
@@ -54,14 +62,26 @@ async def vector_search(
     client = get_client()
     query_filter = _build_filter(category, price_range, district)
 
-    results = await client.search(
+    response = await client.query_points(
         collection_name=settings.QDRANT_COLLECTION,
-        query_vector=vector,
+        query=vector,
         query_filter=query_filter,
         limit=limit,
         with_payload=True,
     )
-    return [{"id": str(r.id), "score": r.score, **r.payload} for r in results]
+    return [{"id": str(r.id), "score": r.score, **r.payload} for r in response.points]
+
+
+async def document_search(vector: list[float], limit: int = 4) -> list[dict]:
+    """Semantic search over the ingested documents collection (e.g. PDFs in /public)."""
+    client = get_client()
+    response = await client.query_points(
+        collection_name=settings.QDRANT_DOCS_COLLECTION,
+        query=vector,
+        limit=limit,
+        with_payload=True,
+    )
+    return [{"score": r.score, **r.payload} for r in response.points]
 
 
 async def scroll_with_filter(
