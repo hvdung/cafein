@@ -19,10 +19,17 @@ class Settings(BaseSettings):
     QDRANT_URL: str = "http://localhost:6333"
     QDRANT_API_KEY: str = ""
     QDRANT_COLLECTION: str = "restaurants"
+    QDRANT_DOCS_COLLECTION: str = "documents"
 
     # AI
     ANTHROPIC_API_KEY: str = ""
     ANTHROPIC_MODEL: str = "claude-sonnet-4-6"
+
+    # OpenAI (chat + embeddings via LangChain)
+    OPENAI_API_KEY: str = ""
+    OPENAI_CHAT_MODEL: str = "gpt-4o-mini"
+    OPENAI_EMBEDDING_MODEL: str = "text-embedding-3-small"
+    EMBEDDING_DIM: int = 1536
 
     # Redis
     REDIS_URL: str = "redis://localhost:6379"

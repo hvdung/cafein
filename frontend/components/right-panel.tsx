@@ -70,7 +70,7 @@ export function RightPanel({ restaurants }: { restaurants: Restaurant[] }) {
     )}
 
     {/* Chat tab */}
-    {tab === "chat" && <AiChat restaurants={restaurants} />}
+    {tab === "chat" && <AiChat />}
   </div>
   );
 }

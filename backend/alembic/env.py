@@ -8,7 +8,7 @@ from app.core.config import settings
 from app.db.database import Base
 
 # Import all models so Alembic detects them
-from app.models import restaurant, review, user  # noqa: F401
+from app.models import chat_history, restaurant, review, user  # noqa: F401
 
 config = context.config
 if config.config_file_name is not None:
