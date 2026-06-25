@@ -18,6 +18,7 @@ import {
 } from "@phosphor-icons/react";
 import { ThemeToggleSidebar, ThemeToggleMobile } from "@/components/theme-toggle";
 import { useAuthStore } from "@/stores/auth-store";
+import { useLogoutMutation } from "@/lib/hooks/use-auth-mutations";
 
 type NavItem = {
   href: string;
@@ -65,7 +66,7 @@ function MobileNavItem({ href, label, icon: Icon }: NavItem) {
 
 function UserWidget() {
   const user = useAuthStore((s) => s.user);
-  const logout = useAuthStore((s) => s.logout);
+  const { mutate: logout, isPending } = useLogoutMutation();
   const router = useRouter();
 
   if (!user) {
@@ -103,7 +104,8 @@ function UserWidget() {
       </div>
       <button
         className="sidebar-logout-btn"
-        onClick={() => { logout(); router.push("/login"); }}
+        onClick={() => logout()}
+        disabled={isPending}
         title="Đăng xuất"
         type="button"
       >

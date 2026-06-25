@@ -3,10 +3,10 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
-import { CaretLeft, Star, ArrowRight, SignOut, SignIn } from "@phosphor-icons/react";
+import { CaretLeft, Star, ArrowRight, SignOut } from "@phosphor-icons/react";
 import { profileStats, restaurants } from "@/lib/mock-data";
 import { useAuthStore } from "@/stores/auth-store";
+import { useLogoutMutation } from "@/lib/hooks/use-auth-mutations";
 
 const searchHistory = [
   { text: "quán nướng giá rẻ gần trung tâm", createdAt: "Hôm qua 19:45", matches: 12 },
@@ -27,26 +27,8 @@ function StatCard({ label, value, sub }: { label: string; value: string | number
 }
 
 export default function ProfilePage() {
-  const user = useAuthStore((s) => s.user);
-  const logout = useAuthStore((s) => s.logout);
-  const hasHydrated = useAuthStore((s) => s._hasHydrated);
-  const router = useRouter();
-
-  useEffect(() => {
-    if (hasHydrated && !user) {
-      router.replace("/login");
-    }
-  }, [user, hasHydrated, router]);
-
-  if (!hasHydrated) {
-    return (
-      <main className="page-shell" style={{ paddingTop: 80, textAlign: "center" }}>
-        <p style={{ color: "var(--text-3)" }}>Đang tải…</p>
-      </main>
-    );
-  }
-
-  if (!user) return null;
+  const user = useAuthStore((s) => s.user)!;
+  const { mutate: logout, isPending: isLoggingOut } = useLogoutMutation();
 
   const initials = user.name
     .split(" ")
@@ -54,11 +36,6 @@ export default function ProfilePage() {
     .join("")
     .slice(0, 2)
     .toUpperCase();
-
-  function handleLogout() {
-    logout();
-    router.push("/login");
-  }
 
   return (
     <main className="page-shell" style={{ paddingTop: 28, paddingBottom: 64 }}>
@@ -69,7 +46,8 @@ export default function ProfilePage() {
           Trang chủ
         </Link>
         <button
-          onClick={handleLogout}
+          onClick={() => logout()}
+          disabled={isLoggingOut}
           style={{
             display: "inline-flex",
             alignItems: "center",
